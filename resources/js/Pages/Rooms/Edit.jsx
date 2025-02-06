@@ -36,7 +36,7 @@ export default function Edit() {
   return (
     <AuthenticatedLayout>
       <div className="container mx-auto p-8 max-w-3xl bg-green shadow-lg rounded-xl">
-        <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center">แก้ไขข้อมูลการจอง</h2>
+        <h2 className="text-3xl font-bold text-black-700 mb-6 text-center">แก้ไขข้อมูลการจอง</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-lg font-medium mb-2">ชื่อลูกค้า</label>

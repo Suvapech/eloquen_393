@@ -16,7 +16,13 @@ export default function Index() {
 
   const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
 
-  const currentBookings = filteredBookings.slice(
+  const sortedBookings = [...filteredBookings].sort((a, b) => {
+    const dateA = a.check_in_date ? new Date(a.check_in_date) : new Date(0);
+    const dateB = b.check_in_date ? new Date(b.check_in_date) : new Date(0);
+    return dateA - dateB; // เรียงจากวันเก่าไปใหม่
+  });
+  
+  const currentBookings = sortedBookings.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -30,7 +36,7 @@ export default function Index() {
   return (
     <AuthenticatedLayout>
       <div className="container mx-auto p-8 bg-white shadow-xl rounded-lg border border-gray-200">
-        <h2 className="text-3xl font-bold text-center mb-6 text-blue-600">รายการการจองที่พัก</h2>
+        <h2 className="text-3xl font-bold text-center mb-6 text-black-600">รายการการจองที่พัก</h2>
 
         <div className="flex justify-center mb-6 space-x-4">
           <input
@@ -59,12 +65,12 @@ export default function Index() {
                   <th className="py-3 px-4 text-left">สถานะห้อง</th>
                   <th className="py-3 px-4 text-left">วันที่เช็คอิน</th>
                   <th className="py-3 px-4 text-left">วันที่เช็คเอาท์</th>
-                  <th className="py-3 px-4 text-left">การจัดการ</th>
+                  <th className="py-3 px-4 text-center">การจัดการ</th>
                 </tr>
               </thead>
               <tbody>
                 {currentBookings.map((booking, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-100 odd:bg-gray-50">
+                  <tr key={index} className="border-b hover:bg-blue-100 odd:bg-gray-50">
                     <td className="py-3 px-4">{booking.customer_name ?? "ไม่ระบุ"}</td>
                     <td className="py-3 px-4">{booking.customer_phone ?? "ไม่ระบุ"}</td>
                     <td className="py-3 px-4">{booking.room_number ?? "ไม่ระบุ"}</td>
@@ -72,20 +78,17 @@ export default function Index() {
                     <td className="py-3 px-4">{booking.check_in_date ? new Date(booking.check_in_date).toLocaleDateString() : "ไม่ระบุ"}</td>
                     <td className="py-3 px-4">{booking.check_out_date ? new Date(booking.check_out_date).toLocaleDateString() : "ไม่ระบุ"}</td>
                     <td className="py-3 px-4">
-                      <div className="flex space-x-2">
-                        <Link
-                          href={`/rooms/${booking.id}/edit`}
-                          className="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow hover:bg-yellow-600"
-                        >
-                          แก้ไข
-                        </Link>
-                        <button
-                          onClick={() => handleDelete(booking.id)}
-                          className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600"
-                        >
-                          ลบ
-                        </button>
-                      </div>
+                    <td className="py-3 px-4 flex justify-center space-x-2">
+                    <Link
+                       href={`/rooms/${booking.id}/edit`}
+                       className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-yellow-600">
+                        แก้ไข
+                    </Link>
+                      <button onClick={() => handleDelete(booking.id)} className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600" >
+                         ลบ
+                      </button>
+                    </td>
+
                     </td>
                   </tr>
                 ))}

@@ -66,7 +66,7 @@ export default function Create({ rooms }) {
   return (
     <AuthenticatedLayout>
       <div className="p-8 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-lg max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-blue-700 mb-6">Create Booking</h1>
+        <h1 className="text-3xl font-bold text-center text-black-700 mb-6">Create Booking</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
